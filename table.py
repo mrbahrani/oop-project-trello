@@ -14,7 +14,7 @@ class Table:
 
     def remove_card(self, card):
         for index, card_item in enumerate(self.cards):
-            if card.matchUser(card_item):
+            if card.match_card(card_item):
                 self.cards.pop(index)
                 break
 
@@ -22,4 +22,7 @@ class Table:
         pass
 
     def reorder_card(self, card, index):
+        pass
+
+    def match_table(self, table):
         pass

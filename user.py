@@ -21,3 +21,8 @@ class User:
 
     def get_email(self):
         return self.email
+
+    def match_user(self, user):
+        return self.username == user.username and \
+               self.name == user.name and \
+               self.email == self.name

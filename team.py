@@ -25,7 +25,7 @@ class Team:
 
     def remove_board(self, board):
         for index, board_item in enumerate(self.boards):
-            if board.matchUser(board_item):
+            if board.match_board(board_item):
                 self.members.pop(board_item)
                 break
 

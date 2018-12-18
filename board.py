@@ -15,7 +15,7 @@ class Board:
 
     def remove_table(self, table):
         for index, table_item in enumerate(self.tables):
-            if table_item.matchBoard(table):
+            if table_item.match_table(table):
                 self.tables.pop(index)
                 break
 
@@ -24,7 +24,12 @@ class Board:
 
     def remove_member(self, member):
         for index, member_item in enumerate(self.members):
-            if member.matchUser(member_item):
+            if member.match_user(member_item):
                 self.members.pop(member_item)
                 break
+
+    def match_board(self, board):
+        return self.name == board.name and \
+               self.members == board.order and \
+               self.tables == board.description
 

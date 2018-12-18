@@ -23,6 +23,11 @@ class Card:
     def get_description(self):
         return self.description
 
+    def match_card(self, card):
+        return self.name == card.name and \
+               self.order == card.order and \
+               self.description == card.description
+
     # def add_check_list_element(self, checkListElement):
     #     self.checkList.append(checkListElement)
 
