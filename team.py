@@ -5,33 +5,29 @@ class Team:
         self.members = list()
         self.boards = list()
 
-
-
-    def setDescription(self, description):
+    def set_description(self, description):
         self.description = description
 
-    def getDescription(self):
+    def get_description(self):
         return self.description
 
-    def addMember(self, member):
+    def add_member(self, member):
         self.members.append(member)
 
-    def removeMember(self, member):
-        for memberIndex in len(self.members):
-            if self.members[memberIndex].matchUser(member):
-                self.members.pop(memberIndex)
+    def remove_member(self, member):
+        for index, member_item in enumerate(self.members):
+            if member.matchUser(member_item):
+                self.members.pop(member_item)
+                break
 
-    def addBoard(self, board):
+    def add_board(self, board):
         self.boards.append(board)
 
-    def removeBoard(self, board):
-        for boardIndex in len(self.boards):
-            if self.boards[boardIndex].matchBoard(board):
-                self.boards.pop(boardIndex)
+    def remove_board(self, board):
+        for index, board_item in enumerate(self.boards):
+            if board.matchUser(board_item):
+                self.members.pop(board_item)
+                break
 
-    def matchTeam(self, teamTwo):
+    def match_team(self, team):
         pass
-
-
-
-

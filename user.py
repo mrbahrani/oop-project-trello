@@ -2,15 +2,22 @@ class User:
     def __init__(self):
         self.username = str()
         self.email = str()
+        self.name = str()
 
-    def setName(self, name):
+    def set_username(self, username):
+        self.username = username
+
+    def get_username(self):
+        return self.username
+
+    def set_name(self, name):
         self.name = name
 
-    def getName(self):
-        return self.name
+    def get_username(self):
+        return self.username
 
-    def setEmail(self, email):
+    def set_email(self, email):
         self.email = email
 
-    def getEmail(self):
+    def get_email(self):
         return self.email

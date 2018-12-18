@@ -3,22 +3,23 @@ class Table:
         self.name = str
         self.cards = list()
 
-    def setName(self, name):
+    def set_name(self, name):
         self.name = name
 
-    def getName(self):
+    def get_name(self):
         return self.name
 
-    def addCard(self, card):
+    def add_card(self, card):
         self.cards.append(card)
 
-    def removeCard(self, card):
-        for cardIndex in len(self.cards):
-            if self.cards[cardIndex].matchUser(card):
-                self.cards.pop(cardIndex)
+    def remove_card(self, card):
+        for index, card_item in enumerate(self.cards):
+            if card.matchUser(card_item):
+                self.cards.pop(index)
+                break
 
-    def moveCard(self, card, table, order):
+    def move_card(self, card, table, order):
         pass
 
-    def reorderCard(self, card, index):
+    def reorder_card(self, card, index):
         pass
