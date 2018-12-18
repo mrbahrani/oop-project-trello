@@ -1,3 +1,7 @@
+from .table import Table
+from .user import User
+
+
 class Board:
     def __init__(self):
         self.name = str()
@@ -10,19 +14,19 @@ class Board:
     def get_name(self):
         return self.name
 
-    def add_table(self, table):
+    def add_table(self, table: Table):
         self.tables.append(table)
 
-    def remove_table(self, table):
+    def remove_table(self, table: Table):
         for index, table_item in enumerate(self.tables):
             if table_item.match_table(table):
                 self.tables.pop(index)
                 break
 
-    def add_member(self, member):
+    def add_member(self, member: User):
         self.members.append(member)
 
-    def remove_member(self, member):
+    def remove_member(self, member: User):
         for index, member_item in enumerate(self.members):
             if member.match_user(member_item):
                 self.members.pop(member_item)

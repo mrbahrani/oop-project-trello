@@ -13,7 +13,7 @@ class User:
     def set_name(self, name):
         self.name = name
 
-    def get_username(self):
+    def get_name(self):
         return self.username
 
     def set_email(self, email):
