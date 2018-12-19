@@ -1,5 +1,5 @@
-from .user import User
-from .board import Board
+from user import User
+from board import Board
 
 
 class Team:
@@ -8,6 +8,12 @@ class Team:
         self.description = str()
         self.members = list()
         self.boards = list()
+
+    def set_name(self, name):
+        self.name = name
+
+    def get_name(self):
+        return self.name
 
     def set_description(self, description):
         self.description = description

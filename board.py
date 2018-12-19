@@ -1,5 +1,7 @@
-from .table import Table
-from .user import User
+# import table
+# import user
+from table import Table
+from user import User
 
 
 class Board:

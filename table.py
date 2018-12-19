@@ -1,5 +1,4 @@
-from .card import Card
-
+from card import Card
 
 class Table:
     def __init__(self):
