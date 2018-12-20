@@ -1,8 +1,3 @@
-# from .board import Board
-# from .team import Team
-# from .user import User
-# from .card import Card
-# from .table import Table
 import board
 import team
 import user

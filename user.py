@@ -3,6 +3,10 @@ class User:
         self.username = str()
         self.email = str()
         self.name = str()
+        self.password = str()
+
+    def set_password(self, password):
+        self.password = password
 
     def set_username(self, username):
         self.username = username
@@ -26,3 +30,6 @@ class User:
         return self.username == user.username and \
                self.name == user.name and \
                self.email == self.name
+
+
+
