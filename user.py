@@ -3,10 +3,13 @@ class User:
         self.username = str()
         self.email = str()
         self.name = str()
-        self.password = str()
+        self.__password = str()
 
     def set_password(self, password):
-        self.password = password
+        self.__password = password
+
+    def __get_password(self):
+        return self.__password
 
     def set_username(self, username):
         self.username = username
