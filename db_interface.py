@@ -1,14 +1,15 @@
 from abstract_class import AbstractItem
 from model_map import db_map
 
+
 class QueryHandler:
-    def create_object(self, obj=AbstractItem()):
+    def create_object(self, obj: AbstractItem):
         parmeter_list = dict()
         model_class = obj.model_class
         for field in db_map[model_class]:
             parmeter_list[field] = getattr(obj, field)
 
-        return model_class.create().where(**parmeter_list).get()
+        return model_class.create(**parmeter_list)
 
     def retrieve_object(self, obj=AbstractItem):
         parmeter_list = dict()
