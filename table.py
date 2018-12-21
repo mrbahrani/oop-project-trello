@@ -12,11 +12,11 @@ class Table(AbstractItem):
     def cards(self):
         return self._get_elements_list()
 
-    def add_card(self, card: Card):
-        return self._add_element(card)
+    def add_card(self, query_manager, card: Card, order=None):
+        return self._add_element(query_manager, card, order)
 
-    def remove_card(self, card: Card):
-        return self._remove_element(card)
+    def remove_card(self, query_manager, card: Card):
+        return self._remove_element(query_manager, card)
 
     def move_card(self, card: Card, table, order):
         pass

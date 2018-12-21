@@ -17,14 +17,24 @@ class AbstractItem:
     def __eq__(self, other):
         return self.id == other.id
 
-    def _add_element(self, element):
-        self._elements_list.append(element)
+    def set_id(self, id):
+        self.id = id
+
+    def get_id(self):
+        return self.id
+
+    def _add_element(self, query_manager, element, order=None):
+        element = element.save(query_manager)
+        if order:
+            self._elements_list.insert(order, element)
+        else:
+            self._elements_list.append(element)
         return self._elements_list
 
-    def _remove_element(self, element):
+    def _remove_element(self, query_manager, element):
         try:
             self._elements_list.remove(element)
-            element.delete()  # delete rom database
+            element.delete(query_manager)  # delete rom database
             del element  # delete the object itself
         except ValueError:  # if element doesnt exist in elements_list
             return None
@@ -66,9 +76,10 @@ class AbstractItem:
 
     def save(self, query_manager):
         if not self.id:  # if object has no instance in db then create it
-            query_manager.create_object(self)
+            element = query_manager.create_object(self)
         else:  # if object already exists in db then update it
-            query_manager.update_object(self)
+            element = query_manager.update_object(self)
+        return element
 
     def delete(self, query_manager):
         #  if object is saved in db then delete it from db
