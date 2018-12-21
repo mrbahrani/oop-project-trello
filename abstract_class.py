@@ -3,17 +3,18 @@ class AbstractItem:
         self._name = str()
         self._description = str()
         self._order = int()
+        self._elements_list = list()
 
-    def add_element(self, element, elements_list: list):
-        elements_list.append(element)
-        return elements_list
+    def add_element(self, element):
+        self._elements_list.append(element)
+        return self._elements_list
 
-    def remove_element(self, element, elements_list: list):
+    def remove_element(self, element):
         try:
-            elements_list.remove(element)
+            self._elements_list.remove(element)
         except ValueError:  # if element doesnt exist in elements_list
             return None
-        return elements_list
+        return self._elements_list
 
     def set_name(self, name):
         self._name = name
@@ -33,5 +34,5 @@ class AbstractItem:
     def get_order(self):
         return self._order
 
-    def reorder_elements(self, elements_list: list, element, index: int):
+    def reorder_elements(self, element, index: int):
         pass
