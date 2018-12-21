@@ -4,9 +4,9 @@ from db_interface import QueryHandler
 class AbstractItem:
     def __init__(self):
         self.id = int()
-        self._name = str()
-        self._description = str()
-        self._order = int()
+        self.name = str()
+        self.description = str()
+        self.order = int()
         self._elements_list = list()
         self._members = list()
         self.model_class = None

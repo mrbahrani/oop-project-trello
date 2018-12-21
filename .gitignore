@@ -27,3 +27,6 @@ environment.txt
 .idea/*
 trello.sqlite
 #
+
+#virtual enviroment
+venv/*
