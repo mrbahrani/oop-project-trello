@@ -5,6 +5,9 @@ class AbstractItem:
         self._order = int()
         self._elements_list = list()
 
+    def __contains__(self, element):
+        return element in self._elements_list
+
     def _add_element(self, element):
         self._elements_list.append(element)
         return self._elements_list
@@ -36,5 +39,3 @@ class AbstractItem:
 
     def get_order(self):
         return self._order
-
-
