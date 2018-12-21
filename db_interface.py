@@ -27,13 +27,13 @@ class QueryHandler:
                 pass
             else:
                 if getattr(obj, field) is not None:
-                    if field in parents:
+                    if field in parents and parent is not None:
                         parameter_list[field] = getattr(obj, field).get_id()
                     else:
                         parameter_list[field] = getattr(obj, field)
         return model_class.select().where(**parameter_list).get()
 
-    def delete_object(self, obj: AbstractItem, parent: None):
+    def delete_object(self, obj: AbstractItem):
         model_class = obj.model_class
         model_class.delete().where(model_class.id == obj.id)
 
