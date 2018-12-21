@@ -1,31 +1,22 @@
 from card import Card
+from models import TableModel
+from abstract_class import AbstractItem
 
 
-class Table:
-    def __init__(self):
-        self.name = str
-        self.cards = list()
+class Table(AbstractItem):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.model_class = TableModel
 
-    def set_name(self, name):
-        self.name = name
-
-    def get_name(self):
-        return self.name
+    @property
+    def cards(self):
+        return self._get_elements_list()
 
     def add_card(self, card: Card):
-        self.cards.append(card)
+        return self._add_element(card)
 
     def remove_card(self, card: Card):
-        for index, card_item in enumerate(self.cards):
-            if card.match_card(card_item):
-                self.cards.pop(index)
-                break
+        return self._remove_element(card)
 
     def move_card(self, card: Card, table, order):
-        pass
-
-    def reorder_card(self, card: Card, index):
-        pass
-
-    def match_table(self, table):
         pass
