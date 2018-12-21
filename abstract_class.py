@@ -32,22 +32,22 @@ class AbstractItem:
         pass
 
     def set_name(self, name):
-        self._name = name
+        self.name = name
 
     def get_name(self):
-        return self._name
+        return self.name
 
     def set_description(self, description):
-        self._description = description
+        self.description = description
 
     def get_description(self):
-        return self._description
+        return self.description
 
     def set_order(self, order):
-        self._order = order
+        self.order = order
 
     def get_order(self):
-        return self._order
+        return self.order
 
     def add_member(self, member):
         self._members.append(member)
