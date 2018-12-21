@@ -10,48 +10,48 @@ class BaseModel(Model):
         database = db
 
 
-class User(BaseModel):
+class UserModel(BaseModel):
     name = CharField(default='')
     username = CharField(unique=True)
     email = CharField(unique=True)
     password = CharField()
 
 
-class Team(BaseModel):
+class TeamModel(BaseModel):
     name = CharField()
     description = TextField(default='')
 
 
-class Board(BaseModel):
+class BoardModel(BaseModel):
     name = CharField()
-    team = ForeignKeyField(Team, backref='boards')
+    team = ForeignKeyField(TeamModel, backref='boards')
     created_at = DateTimeField(default=datetime.datetime.now)
 
 
-class Table(BaseModel):
+class TableModel(BaseModel):
     name = CharField()
-    board = ForeignKeyField(Board, backref='tables')
+    board = ForeignKeyField(BoardModel, backref='tables')
     created_at = DateTimeField(default=datetime.datetime.now)
 
 
-class Card(BaseModel):
+class CardModel(BaseModel):
     name = CharField()
     order = IntegerField()
     description = TextField(default='')
-    table = ForeignKeyField(Table, backref='cards')
+    table = ForeignKeyField(TableModel, backref='cards')
     created_at = DateTimeField(default=datetime.datetime.now)
 
 
 class MemberRelation(BaseModel):
-    member = ForeignKeyField(User, backref='memberships')
-    card = ForeignKeyField(Card, backref='member_relations', null=False)
-    board = ForeignKeyField(Board, backref='member_relations', null=False)
-    team = ForeignKeyField(Team, backref='member_relations', null=False)
+    member = ForeignKeyField(UserModel, backref='memberships')
+    card = ForeignKeyField(CardModel, backref='member_relations', null=False)
+    board = ForeignKeyField(BoardModel, backref='member_relations', null=False)
+    team = ForeignKeyField(TeamModel, backref='member_relations', null=False)
 
 
 def initialize():
     db.connect()
-    db.create_tables([User, Team, Board, Table, Card, MemberRelation], safe=True)
+    db.create_tables([UserModel, TeamModel, BoardModel, TableModel, CardModel, MemberRelation], safe=True)
     # db.close()
 
 
@@ -74,7 +74,7 @@ def add_some_users_and_teams():
     ]
     created_users = []
     for user in users:
-        u = User.create(
+        u = UserModel.create(
             name=user['name'],
             email=user['email'],
             username=user['username'],
@@ -85,28 +85,28 @@ def add_some_users_and_teams():
     print(created_users)
 
     for team in teams:
-        t = Team.create(
+        t = TeamModel.create(
             name=team['name'],
             description=team['description']
         )
 
 
 def add_some_tables():
-    boards = Board.select()
+    boards = BoardModel.select()
     ts = []
     for i in range(30):
-        t = Table.create(name='some table %d' % i,
+        t = TableModel.create(name='some table %d' % i,
                          board=boards[random.randrange(0, len(boards))])
         ts.append(t)
     print(ts)
 
 
 def add_some_card():
-    tables = Table.select()
+    tables = TableModel.select()
     cs = []
     for table in tables:
         for i in range(random.randrange(5, 10)):
-            c = Card.create(
+            c = CardModel.create(
                 name='some card %d' % i,
                 order=i,
                 description='some looong loong description about what this card does or wants and whats needs to be done in order for this card to leave us the hell alone',
@@ -120,8 +120,9 @@ def add_some_card():
 def add_some_members():
     pass
 
+
 def add_some_boards():
-    teams = Team.select()
+    teams = TeamModel.select()
     boards = [
         {'name': 'product backlog', 'team': ''},
         {'name': 'technical team', 'team': ''},
@@ -133,7 +134,7 @@ def add_some_boards():
     ]
     bs = []
     for board in boards:
-        b = Board.create(
+        b = BoardModel.create(
             name=board['name'],
             team=teams[random.randrange(0, len(teams))]
         )
