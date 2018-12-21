@@ -1,12 +1,12 @@
 class QueryHandler:
-    def create_object(self, model_class, obj):
+    def create_object(self, obj):
         pass
 
-    def retrieve_object(self, model_class, obj):
+    def retrieve_object(self, obj):
         pass
 
-    def delete_object(self, model_class, obj):
+    def delete_object(self, obj):
         pass
 
-    def update_object(self, model_class, obj):
+    def update_object(self, obj):
         pass
