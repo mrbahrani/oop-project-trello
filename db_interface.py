@@ -5,9 +5,10 @@ from model_map import db_map, parents
 class QueryHandler:
     def create_object(self, obj: AbstractItem, parent: AbstractItem):
         parameter_list = dict()
-        model_class = obj.model_class
-        for field in db_map[model_class]:
-            parameter_list[field] = getattr(obj, field)
+        # model_class = obj.model_class
+        # for field in db_map[model_class]:
+        #     if field not in parents:
+        #         parameter_list[field] = getattr(obj, field)
         model_class = obj.model_class
         for field in db_map[model_class]:
             if field in parents:

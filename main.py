@@ -4,6 +4,7 @@ from table import Table
 from card import Card
 from user import User
 from team import Team
+from db_interface import QueryHandler
 
 
 def load_db():
@@ -88,7 +89,6 @@ def convert_to_board_classes(boards, board_to_table):
     return all_items, team_to_board
 
 
-
 def convert_to_team_classes(teams, team_to_board):
     all_items = []
     for model in teams:
@@ -102,8 +102,6 @@ def convert_to_team_classes(teams, team_to_board):
     return all_items
 
 
-
-
 if __name__ == "__main__":
     teams, boards, tables, cards, users = load_db()
     all_users = convert_to_user_classes(users)
@@ -111,4 +109,5 @@ if __name__ == "__main__":
     all_tables, board_to_table = convert_to_table_classes(tables, table_to_cards)
     all_boards, team_to_board = convert_to_board_classes(boards, board_to_table)
     all_teams = convert_to_team_classes(teams, team_to_board)
-    print(all_teams[0].boards[1].tables[1].cards[2])
+
+    query_manager = QueryHandler()

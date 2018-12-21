@@ -23,7 +23,8 @@ class AbstractItem:
     def _add_element(self, query_manager, element, order=None):
         order = order if order else len(self._elements_list)
         element.set_order(order)
-        element = element.save(query_manager)
+        element_model = element.save(query_manager, self)
+        element.set_id(element_model.id)
         self._elements_list.insert(order, element)
         self._reorder_elements(element, order)
         return self._elements_list
@@ -71,11 +72,16 @@ class AbstractItem:
     def _get_elements_list(self):
         return self._elements_list
 
-    def save(self, query_manager):
+    def save(self, query_manager, parent_element=None):
         if not self.id:  # if object has no instance in db then create it
-            element = query_manager.create_object(self)
+            if parent_element:
+                print(parent_element)
+                element = query_manager.create_object(self, parent_element)
+            else:
+                element = query_manager.create_object(self)
         else:  # if object already exists in db then update it
             element = query_manager.update_object(self)
+
         return element
 
     def delete(self, query_manager):
