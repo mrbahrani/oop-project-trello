@@ -8,10 +8,13 @@ class QueryHandler:
         model_class = obj.model_class
         for field in db_map[model_class]:
             parmeter_list[field] = getattr(obj, field)
+        model_class = obj.model_class
+        for field in map[model_class]:
+            parmeter_list[field] = getattr(obj, field)
 
         return model_class.create(**parmeter_list)
 
-    def retrieve_object(self, obj=AbstractItem):
+    def retrieve_object(self, obj: AbstractItem):
         parmeter_list = dict()
         model_class = obj.model_class
         for field in db_map[model_class]:
@@ -20,8 +23,16 @@ class QueryHandler:
 
         return model_class.select().where(**parmeter_list).get()
 
-    def delete_object(self, model_class, obj):
-        pass
+    def delete_object(self, model_class, obj: AbstractItem):
+        model_class = obj.model_class
+        model_class.delete().where(model_class.id == obj.id)
 
-    def update_object(self, model_class, obj):
-        pass
+    def update_object(self, model_class, obj: AbstractItem):
+        parmeter_list = dict()
+        for field in db_map[model_class]:
+                parmeter_list[field] = getattr(obj, field)
+        model_class = obj.model_class
+        model_class.update(**parmeter_list)\
+            .where(model_class.id == obj.id).execute()
+
+
