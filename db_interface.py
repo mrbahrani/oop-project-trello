@@ -4,35 +4,32 @@ from model_map import db_map
 
 class QueryHandler:
     def create_object(self, obj: AbstractItem):
-        parmeter_list = dict()
+        parameter_list = dict()
         model_class = obj.model_class
         for field in db_map[model_class]:
-            parmeter_list[field] = getattr(obj, field)
+            parameter_list[field] = getattr(obj, field)
         model_class = obj.model_class
-        for field in map[model_class]:
-            parmeter_list[field] = getattr(obj, field)
-
-        return model_class.create(**parmeter_list)
+        for field in db_map[model_class]:
+            parameter_list[field] = getattr(obj, field)
+        return model_class.create(**parameter_list)
 
     def retrieve_object(self, obj: AbstractItem):
-        parmeter_list = dict()
+        parameter_list = dict()
         model_class = obj.model_class
         for field in db_map[model_class]:
             if getattr(obj, field) is not None:
-                parmeter_list[field] = getattr(obj, field)
+                parameter_list[field] = getattr(obj, field)
+        return model_class.select().where(**parameter_list).get()
 
-        return model_class.select().where(**parmeter_list).get()
-
-    def delete_object(self, model_class, obj: AbstractItem):
+    def delete_object(self, obj: AbstractItem):
         model_class = obj.model_class
         model_class.delete().where(model_class.id == obj.id)
 
-    def update_object(self, model_class, obj: AbstractItem):
-        parmeter_list = dict()
-        for field in db_map[model_class]:
-                parmeter_list[field] = getattr(obj, field)
+    def update_object(self, obj: AbstractItem):
         model_class = obj.model_class
-        model_class.update(**parmeter_list)\
+        parameter_list = dict()
+        for field in db_map[model_class]:
+                parameter_list[field] = getattr(obj, field)
+        model_class = obj.model_class
+        model_class.update(**parameter_list)\
             .where(model_class.id == obj.id).execute()
-
-
