@@ -52,7 +52,7 @@ class MemberBoardRelation(BaseModel):
     board = ForeignKeyField(BoardModel, backref='member_relations', null=False)
 
 
-class MemberBoardRelation(BaseModel):
+class MemberTeamRelation(BaseModel):
     member = ForeignKeyField(UserModel, backref='memberships')
     team = ForeignKeyField(TeamModel, backref='member_relations', null=False)
 
