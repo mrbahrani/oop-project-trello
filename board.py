@@ -12,9 +12,9 @@ class Board(AbstractItem):
     def tables(self):
         return self._get_elements_list()
 
-    def add_table(self, table: Table):
-        return self._add_element(table)
+    def add_table(self, query_manager, table: Table, order=None):
+        return self._add_element(query_manager, table, order)
 
-    def remove_table(self, table: Table):
-        return self._remove_element(table)
+    def remove_table(self, query_manager, table: Table):
+        return self._remove_element(query_manager, table)
 

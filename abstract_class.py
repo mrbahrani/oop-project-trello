@@ -24,11 +24,11 @@ class AbstractItem:
         return self.id
 
     def _add_element(self, query_manager, element, order=None):
+        order = order if order else len(self._elements_list)
+        element.set_order(order)
         element = element.save(query_manager)
-        if order:
-            self._elements_list.insert(order, element)
-        else:
-            self._elements_list.append(element)
+        self._elements_list.insert(order, element)
+        self._reorder_elements(element, order)
         return self._elements_list
 
     def _remove_element(self, query_manager, element):

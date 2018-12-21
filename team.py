@@ -13,8 +13,8 @@ class Team(AbstractItem):
     def boards(self):
         return self._get_elements_list()
 
-    def add_board(self, board: Board):
-        return self._remove_element(board)
+    def add_board(self, query_manager, board: Board, order=None):
+        return self._add_element(query_manager, board, order)
 
-    def remove_board(self, board: Board):
-        return self._remove_element(board)
+    def remove_board(self, query_manager, board: Board):
+        return self._remove_element(query_manager, board)
