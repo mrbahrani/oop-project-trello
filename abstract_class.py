@@ -3,7 +3,7 @@ from db_interface import QueryHandler
 
 class AbstractItem:
     def __init__(self):
-        self.id = int()
+        self.id = None
         self.name = str()
         self.description = str()
         self.order = int()
@@ -24,6 +24,8 @@ class AbstractItem:
     def _remove_element(self, element):
         try:
             self._elements_list.remove(element)
+            element.delete()  # delete rom database
+            del element  # delete the object itself
         except ValueError:  # if element doesnt exist in elements_list
             return None
         return self._elements_list
@@ -62,4 +64,14 @@ class AbstractItem:
     def _get_elements_list(self):
         return self._elements_list
 
+    def save(self, query_manager):
+        if not self.id:  # if object has no instance in db then create it
+            query_manager.create_object(self)
+        else:  # if object already exists in db then update it
+            query_manager.update_object(self)
 
+    def delete(self, query_manager):
+        #  if object is saved in db then delete it from db
+        if self.id:
+            query_manager.delete_object(self)
+            self.id = None
