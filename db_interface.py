@@ -1,16 +1,19 @@
 from abstract_class import AbstractItem
-from model_map import db_map
+from model_map import db_map, parents
 
 
 class QueryHandler:
-    def create_object(self, obj: AbstractItem):
+    def create_object(self, obj: AbstractItem, parent: AbstractItem):
         parameter_list = dict()
         model_class = obj.model_class
         for field in db_map[model_class]:
             parameter_list[field] = getattr(obj, field)
         model_class = obj.model_class
         for field in db_map[model_class]:
-            parameter_list[field] = getattr(obj, field)
+            if field in parents:
+                parameter_list[field] = parent.get_id()
+            else:
+                parameter_list[field] = getattr(obj, field)
         return model_class.create(**parameter_list)
 
     def retrieve_object(self, obj: AbstractItem):
