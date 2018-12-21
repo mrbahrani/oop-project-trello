@@ -8,7 +8,7 @@ class AbstractItem:
         self._description = str()
         self._order = int()
         self._elements_list = list()
-        self.members = list()
+        self._members = list()
         self.model_class = None
 
     def __contains__(self, element):
@@ -50,14 +50,14 @@ class AbstractItem:
         return self._order
 
     def add_member(self, member):
-        self.members.append(member)
+        self._members.append(member)
 
     def remove_member(self, member):
         try:
-            self.members.remove(member)
-        except ValueError:  # if element doesnt exist in elements_list
+            self._members.remove(member)
+        except ValueError:  # if element doesnt exist in members
             return None
-        return self.members
+        return self._members
 
     def _get_elements_list(self):
         return self._elements_list

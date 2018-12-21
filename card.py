@@ -6,6 +6,7 @@ class Card(AbstractItem):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.model_class = CardModel
+        self._elements_list = None  # card has no list of any sub-items
 
     # def add_check_list_element(self, checkListElement):
     #     self.checkList.append(checkListElement)

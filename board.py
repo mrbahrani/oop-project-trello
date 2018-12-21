@@ -1,5 +1,4 @@
 from table import Table
-from user import User
 from models import BoardModel
 from abstract_class import AbstractItem
 
