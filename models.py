@@ -59,7 +59,7 @@ class MemberTeamRelation(BaseModel):
 
 def initialize():
     db.connect()
-    db.create_tables([UserModel, TeamModel, BoardModel, TableModel, CardModel, MemberRelation], safe=True)
+    db.create_tables([UserModel, TeamModel, BoardModel, TableModel, CardModel, MemberCardRelation, MemberBoardRelation, MemberTeamRelation], safe=True)
     # db.close()
 
 
@@ -153,7 +153,7 @@ def add_some_boards():
 
 if __name__ == '__main__':
     initialize()
-    # add_some_users_and_teams()
-    # add_some_boards()
-    # add_some_tables()
-    # add_some_card()
+    add_some_users_and_teams()
+    add_some_boards()
+    add_some_tables()
+    add_some_card()

@@ -1,6 +1,3 @@
-from db_interface import QueryHandler
-
-
 class AbstractItem:
     def __init__(self):
         self.id = None

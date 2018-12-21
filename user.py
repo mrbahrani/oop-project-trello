@@ -1,5 +1,6 @@
 class User:
     def __init__(self):
+        self.id = None
         self.username = str()
         self.email = str()
         self.name = str()
@@ -33,6 +34,9 @@ class User:
         return self.username == user.username and \
                self.name == user.name and \
                self.email == self.name
+
+    def sign_up(self, name, username, email, password):
+        pass
 
 
 
