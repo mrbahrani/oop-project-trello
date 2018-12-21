@@ -42,10 +42,18 @@ class CardModel(BaseModel):
     created_at = DateTimeField(default=datetime.datetime.now)
 
 
-class MemberRelation(BaseModel):
+class MemberCardRelation(BaseModel):
     member = ForeignKeyField(UserModel, backref='memberships')
     card = ForeignKeyField(CardModel, backref='member_relations', null=False)
+
+
+class MemberBoardRelation(BaseModel):
+    member = ForeignKeyField(UserModel, backref='memberships')
     board = ForeignKeyField(BoardModel, backref='member_relations', null=False)
+
+
+class MemberBoardRelation(BaseModel):
+    member = ForeignKeyField(UserModel, backref='memberships')
     team = ForeignKeyField(TeamModel, backref='member_relations', null=False)
 
 
