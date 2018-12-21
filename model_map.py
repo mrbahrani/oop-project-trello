@@ -8,3 +8,5 @@ db_map = {
     TeamModel: ["name"],
     UserModel: ["name", "username", "email", "password"]
 }
+
+parents = ["table", "board", "team"]
