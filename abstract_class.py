@@ -21,6 +21,15 @@ class AbstractItem:
         return self.id
 
     def _add_element(self, query_manager, element, order=None):
+        """
+
+        :param query_manager:
+        :param element:
+        :param order:
+        :return elements_list:
+
+        this method saves passed `element` and adds it to elements list
+        """
         order = order if order else len(self._elements_list)
         element.set_order(order)
         element_model = element.save(query_manager, self)
@@ -30,6 +39,14 @@ class AbstractItem:
         return self._elements_list
 
     def _remove_element(self, query_manager, element):
+        """
+
+        :param query_manager:
+        :param element:
+        :return:
+
+        this method removes passed element both from database and elements list
+        """
         try:
             self._elements_list.remove(element)
             element.delete(query_manager)  # delete rom database
@@ -77,6 +94,16 @@ class AbstractItem:
         return self._elements_list
 
     def save(self, query_manager, parent_element=None):
+        """
+
+        :param query_manager:
+        :param parent_element:
+        :return element:
+
+        this method saves changes in this object
+        updates if already exists in database
+        or creates if its not in database
+        """
         if not self.id:  # if object has no instance in db then create it
             if parent_element:
                 print(parent_element)
@@ -89,6 +116,13 @@ class AbstractItem:
         return element
 
     def delete(self, query_manager):
+        """
+
+        :param query_manager:
+        :return:
+
+        this method deletes current object from database
+        """
         #  if object is saved in db then delete it from db
         if self.id:
             query_manager.delete_object(self)
