@@ -38,6 +38,10 @@ class AbstractItem:
             return None
         return self._elements_list
 
+    def _move_element(self, query_manager, element, parent_element, order=None):
+        self._remove_element(query_manager, element)
+        parent_element._add_element(query_manager, element, order)
+
     def _reorder_elements(self, element, index: int):
         pass
 

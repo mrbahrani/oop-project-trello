@@ -38,5 +38,7 @@ class User:
     def sign_up(self, name, username, email, password):
         pass
 
+    def sign_in(self, username, password):
+        pass
 
 

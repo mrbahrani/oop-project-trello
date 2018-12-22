@@ -18,5 +18,5 @@ class Table(AbstractItem):
     def remove_card(self, query_manager, card: Card):
         return self._remove_element(query_manager, card)
 
-    def move_card(self, card: Card, table, order):
-        pass
+    def move_card(self, query_manager, card: Card, table, order=None):
+        self._move_element(query_manager, card, table, order)
