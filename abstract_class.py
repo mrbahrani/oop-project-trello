@@ -56,6 +56,17 @@ class AbstractItem:
         return self._elements_list
 
     def _move_element(self, query_manager, element, parent_element, order=None):
+        """
+
+        :param query_manager:
+        :param element:
+        :param parent_element:
+        :param order:
+        :return:
+
+        this method removes element from its own parent
+        and adds it to destination parent
+        """
         self._remove_element(query_manager, element)
         parent_element._add_element(query_manager, element, order)
 
@@ -106,7 +117,7 @@ class AbstractItem:
         """
         if not self.id:  # if object has no instance in db then create it
             if parent_element:
-                print(parent_element)
+                # print(parent_element)
                 element = query_manager.create_object(self, parent_element)
             else:
                 element = query_manager.create_object(self)

@@ -102,7 +102,7 @@ def convert_to_team_classes(teams, team_to_board):
     return all_items
 
 
-if __name__ == "__main__":
+def refresh_from_db():
     teams, boards, tables, cards, users = load_db()
     all_users = convert_to_user_classes(users)
     all_cards, table_to_cards = convert_to_card_classes(cards)
@@ -111,3 +111,8 @@ if __name__ == "__main__":
     all_teams = convert_to_team_classes(teams, team_to_board)
 
     query_manager = QueryHandler()
+    return all_cards, all_users, all_boards, all_tables, all_teams, query_manager
+
+
+if __name__ == "__main__":
+    all_cards, all_users, all_boards, all_tables, all_teams, query_manager = refresh_from_db()
