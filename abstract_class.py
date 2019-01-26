@@ -79,7 +79,7 @@ class ItemComponent(ItemDBInterface):
         self.description = str()
         self.order = int()
         self.model_class = None
-        self._member_interface = ItemMemberInterface()
+        self.members = ItemMemberInterface()
 
     def set_name(self, name):
         self.name = name
