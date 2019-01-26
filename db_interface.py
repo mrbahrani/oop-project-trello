@@ -1,4 +1,4 @@
-from abstract_class import AbstractItem
+from abstract_class import ComposedItem as AbstractItem
 from model_map import db_map, parents
 
 

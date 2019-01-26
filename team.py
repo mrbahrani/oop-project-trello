@@ -1,6 +1,6 @@
 from user import User
 from board import Board
-from abstract_class import AbstractItem
+from abstract_class import ComposedItem as AbstractItem
 from models import TeamModel
 
 

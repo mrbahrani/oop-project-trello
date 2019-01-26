@@ -1,6 +1,6 @@
 from card import Card
 from models import TableModel
-from abstract_class import AbstractItem
+from abstract_class import ComposedItem as AbstractItem
 
 
 class Table(AbstractItem):

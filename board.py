@@ -1,6 +1,6 @@
 from table import Table
 from models import BoardModel
-from abstract_class import AbstractItem
+from abstract_class import ComposedItem as AbstractItem
 
 
 class Board(AbstractItem):
