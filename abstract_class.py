@@ -72,14 +72,15 @@ class ItemDBInterface:
             self.id = None
 
 
-class ItemComponent(ItemDBInterface):
+class ItemComponent:
     def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
+        # super().__init__(*args, **kwargs)
         self.name = str()
         self.description = str()
         self.order = int()
         self.model_class = None
         self.members = ItemMemberInterface()
+        self.db_interface = ItemDBInterface()
 
     def set_name(self, name):
         self.name = name
