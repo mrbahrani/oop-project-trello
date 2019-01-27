@@ -118,7 +118,7 @@ class ComposedItem(ItemComponent):
         """
         order = order if order else len(self._elements_list)
         element.set_order(order)
-        element_model = element.save(query_manager, self)
+        element_model = element.db_interface.save(query_manager, self)
         element.set_id(element_model.id)
         self._elements_list.insert(order, element)
         self._reorder_elements(element, order)
@@ -135,7 +135,7 @@ class ComposedItem(ItemComponent):
         """
         try:
             self._elements_list.remove(element)
-            element.delete(query_manager)  # delete rom database
+            element.db_interface.delete(query_manager)  # delete rom database
             del element  # delete the object itself
         except ValueError:  # if element doesnt exist in elements_list
             return None
@@ -197,7 +197,7 @@ class AbstractItem:
         """
         order = order if order else len(self._elements_list)
         element.set_order(order)
-        element_model = element.save(query_manager, self)
+        element_model = element.db_interface.save(query_manager, self)
         element.set_id(element_model.id)
         self._elements_list.insert(order, element)
         self._reorder_elements(element, order)
@@ -214,7 +214,7 @@ class AbstractItem:
         """
         try:
             self._elements_list.remove(element)
-            element.delete(query_manager)  # delete rom database
+            element.db_interface.delete(query_manager)  # delete rom database
             del element  # delete the object itself
         except ValueError:  # if element doesnt exist in elements_list
             return None
