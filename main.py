@@ -4,6 +4,7 @@ from table import Table
 from card import Card
 from user import User
 from team import Team
+from comment import Comment
 from db_interface import QueryHandler
 
 
@@ -13,7 +14,8 @@ def load_db():
     tables = TableModel.select()
     cards = CardModel.select()
     users = UserModel.select()
-    return teams, boards, tables, cards, users
+    comments = CommentModel.select()
+    return teams, boards, tables, cards, users, comments
 
 
 def convert_to_user_classes(users):
@@ -30,7 +32,7 @@ def convert_to_user_classes(users):
     return all_users
 
 
-def convert_to_card_classes(cards):
+def convert_to_card_classes(cards, card_to_comments):
     all_cards = []
     table_to_card_map = dict()
     for card in cards:
@@ -39,6 +41,7 @@ def convert_to_card_classes(cards):
         c.set_description(card.description)
         c.set_order(card.order)
         c.set_name(card.name)
+        c._elements_list = card_to_comments[c.get_id()]
 
         if not table_to_card_map.get(card.table.id):
             table_to_card_map[card.table.id] = [c]
@@ -47,6 +50,24 @@ def convert_to_card_classes(cards):
 
         all_cards.append(c)
     return all_cards, table_to_card_map
+
+
+def convert_to_comment_classes(comments):
+    all_comments = []
+    card_to_comment_map = dict()
+    for comment in comments:
+        c = Comment()
+        c.set_id(comment.id)
+        c.set_text(comment.text)
+        c.set_user(comment.user)
+
+        if not card_to_comment_map.get(comment.card.id):
+            card_to_comment_map[comment.card.id] = [c]
+        else:
+            card_to_comment_map[comment.card.id].append(c)
+
+            all_comments.append(c)
+    return all_comments, card_to_comment_map
 
 
 def convert_to_table_classes(tables, table_to_card_map):
@@ -103,16 +124,17 @@ def convert_to_team_classes(teams, team_to_board):
 
 
 def refresh_from_db():
-    teams, boards, tables, cards, users = load_db()
+    teams, boards, tables, cards, users, comments = load_db()
     all_users = convert_to_user_classes(users)
-    all_cards, table_to_cards = convert_to_card_classes(cards)
+    all_comments, card_to_comments = convert_to_comment_classes(comments)
+    all_cards, table_to_cards = convert_to_card_classes(cards, card_to_comments)
     all_tables, board_to_table = convert_to_table_classes(tables, table_to_cards)
     all_boards, team_to_board = convert_to_board_classes(boards, board_to_table)
     all_teams = convert_to_team_classes(teams, team_to_board)
 
     query_manager = QueryHandler()
-    return all_cards, all_users, all_boards, all_tables, all_teams, query_manager
+    return all_comments, all_cards, all_users, all_boards, all_tables, all_teams, query_manager
 
 
 if __name__ == "__main__":
-    all_cards, all_users, all_boards, all_tables, all_teams, qm = refresh_from_db()
+    all_comments, all_cards, all_users, all_boards, all_tables, all_teams, qm = refresh_from_db()

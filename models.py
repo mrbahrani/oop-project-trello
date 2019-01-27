@@ -42,6 +42,15 @@ class CardModel(BaseModel):
     created_at = DateTimeField(default=datetime.datetime.now)
 
 
+class CommentModel(BaseModel):
+    text = CharField()
+    description = TextField(default='')
+    card = ForeignKeyField(CardModel, backref='comments')
+    user = ForeignKeyField(UserModel, backref='comments')
+
+    created_at = DateTimeField(default=datetime.datetime.now)
+
+
 class MemberCardRelation(BaseModel):
     member = ForeignKeyField(UserModel, backref='memberships')
     card = ForeignKeyField(CardModel, backref='member_relations', null=False)
@@ -59,7 +68,8 @@ class MemberTeamRelation(BaseModel):
 
 def initialize():
     db.connect()
-    db.create_tables([UserModel, TeamModel, BoardModel, TableModel, CardModel, MemberCardRelation, MemberBoardRelation, MemberTeamRelation], safe=True)
+    db.create_tables([UserModel, TeamModel, BoardModel, TableModel, CardModel, CommentModel,
+                      MemberCardRelation, MemberBoardRelation, MemberTeamRelation], safe=True)
     # db.close()
 
 
@@ -125,6 +135,23 @@ def add_some_card():
     print(cs)
 
 
+def add_some_comments():
+    cards = CardModel.select()
+    users = UserModel.select()
+    cs = []
+    for card in cards:
+        for i in range(random.randrange(1, 5)):
+            user = random.randrange(1, len(users))
+            c = CommentModel.create(
+                user=user,
+                text='some text and comment that user {} wrote on this card'.format(user),
+                card=card,
+            )
+            cs.append(c)
+
+    print(cs)
+
+
 def add_some_members():
     pass
 
@@ -157,3 +184,4 @@ if __name__ == '__main__':
     add_some_boards()
     add_some_tables()
     add_some_card()
+    add_some_comments()

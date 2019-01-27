@@ -182,6 +182,8 @@ class ComposedItem(ItemComponent):
         if element:
             element.set_order(index)
         # sort elements list by order
+        for e in self._elements_list:
+            print(e.order)
         self._elements_list = sorted(self._elements_list, key=lambda elm: getattr(elm, 'order'))
         # set order and save all elements
         for i, elm in enumerate(self._elements_list):
