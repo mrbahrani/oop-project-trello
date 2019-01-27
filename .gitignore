@@ -30,3 +30,4 @@ trello.sqlite
 
 #virtual enviroment
 venv/*
+diagram/oop_trello\.jpg
