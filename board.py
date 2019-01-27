@@ -13,7 +13,7 @@ class Board(AbstractItem):
         return self._get_elements_list()
 
     def add_table(self, query_manager, table: Table, order=None):
-        return self._add_element(query_manager, table, order)
+        return self.add_element(query_manager, table, order)
 
     def remove_table(self, query_manager, table: Table):
         return self._remove_element(query_manager, table)

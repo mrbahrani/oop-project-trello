@@ -106,7 +106,10 @@ class ComposedItem(ItemComponent):
         super().__init__(*args, **kwargs)
         self._elements_list = list()
 
-    def _add_element(self, query_manager, element, order=None):
+    def __contains__(self, element):
+        return element in self._elements_list
+
+    def add_element(self, query_manager, element, order=None):
         """
 
         :param query_manager:
@@ -121,7 +124,7 @@ class ComposedItem(ItemComponent):
         element_model = element.save(query_manager, self)
         element.set_id(element_model.id)
         self._elements_list.insert(order, element)
-        self._reorder_elements(element, order)
+        self._reorder_elements(query_manager, element, order)
         return self._elements_list
 
     def _remove_element(self, query_manager, element):
@@ -139,6 +142,7 @@ class ComposedItem(ItemComponent):
             del element  # delete the object itself
         except ValueError:  # if element doesnt exist in elements_list
             return None
+        self._reorder_elements(query_manager)
         return self._elements_list
 
     def _move_element(self, query_manager, element, parent_element, order=None):
@@ -154,7 +158,24 @@ class ComposedItem(ItemComponent):
         and adds it to destination parent
         """
         self._remove_element(query_manager, element)
-        parent_element._add_element(query_manager, element, order)
+        parent_element.add_element(query_manager, element, order)
+        self._reorder_elements(query_manager, element, order)
+
+    def _copy_element(self, query_manager, element, parent_element, order=None):
+        """
+
+        :param query_manager:
+        :param element:
+        :param parent_element:
+        :param order:
+        :return:
+
+        this method copies given element to another parent element
+        """
+        element.set_id(None)
+        element.save(query_manager, parent_element)
+        parent_element.add_element(query_manager, element, order)
+        self._reorder_elements(query_manager, element, order)
 
     def _reorder_elements(self, query_manager, element=None, index=None):
         # set current order
@@ -199,7 +220,7 @@ class AbstractItem:
     def get_id(self):
         return self.id
 
-    def _add_element(self, query_manager, element, order=None):
+    def add_element(self, query_manager, element, order=None):
         """
 
         :param query_manager:
@@ -214,7 +235,7 @@ class AbstractItem:
         element_model = element.save(query_manager, self)
         element.set_id(element_model.id)
         self._elements_list.insert(order, element)
-        self._reorder_elements(element, order)
+        self._reorder_elements(query_manager, element, order)
         return self._elements_list
 
     def _remove_element(self, query_manager, element):
@@ -247,7 +268,7 @@ class AbstractItem:
         and adds it to destination parent
         """
         self._remove_element(query_manager, element)
-        parent_element._add_element(query_manager, element, order)
+        parent_element.add_element(query_manager, element, order)
 
     def _reorder_elements(self, element, index: int):
         pass
