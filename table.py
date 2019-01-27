@@ -10,7 +10,8 @@ class Table(AbstractItem):
 
     @property
     def cards(self):
-        return self._get_elements_list()
+        sorted_cards = self._elements_list = sorted(self._elements_list, key=lambda elm: getattr(elm, 'order'))
+        return sorted_cards
 
     def add_card(self, query_manager, card: Card, order=None):
         return self.add_element(query_manager, card, order)

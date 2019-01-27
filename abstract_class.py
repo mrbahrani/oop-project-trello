@@ -175,22 +175,28 @@ class ComposedItem(ItemComponent):
         element.set_id(None)
         element.save(query_manager, parent_element)
         parent_element.add_element(query_manager, element, order)
-        self._reorder_elements(query_manager, element, order)
+        if order:
+            self._reorder_elements(query_manager, element, order)
+        else:
+            self._reorder_elements(query_manager)
 
     def _reorder_elements(self, query_manager, element=None, index=None):
         # set current order
         if element:
             element.set_order(index)
         # sort elements list by order
-        for e in self._elements_list:
-            print(e.order)
+        for i, elm in enumerate(self._elements_list):
+            if not elm.order:
+                elm.set_order(i)
         self._elements_list = sorted(self._elements_list, key=lambda elm: getattr(elm, 'order'))
+        if element and index:
+            self._elements_list.remove(element)
+            print('index is', index)
+            self._elements_list.insert(index, element)
+
         # set order and save all elements
         for i, elm in enumerate(self._elements_list):
             # order for element is already set, so just save it
-            if element and elm == element:
-                elm.save(query_manager)
-                continue
             elm.set_order(i)
             elm.save(query_manager)
 

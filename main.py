@@ -41,7 +41,7 @@ def convert_to_card_classes(cards, card_to_comments):
         c.set_description(card.description)
         c.set_order(card.order)
         c.set_name(card.name)
-        c._elements_list = card_to_comments[c.get_id()]
+        c._elements_list = card_to_comments.get(c.get_id())
 
         if not table_to_card_map.get(card.table.id):
             table_to_card_map[card.table.id] = [c]

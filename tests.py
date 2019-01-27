@@ -12,10 +12,19 @@ import unittest
 
 class TestSum(unittest.TestCase):
 
-    # def test_copy_element(self):
-    #     c = all_tables[0].cards[0]
-    #     all_tables[0].copy_card(qm, c, all_tables[1])
-    #     self.assertTrue(c in all_tables[1])
+    def test_copy_element(self):
+        c = all_tables[0].cards[0]
+        all_tables[0].copy_card(qm, c, all_tables[1])
+        self.assertTrue(c in all_tables[1])
+
+    def test_reorder_element(self):
+        card = all_tables[3].cards[2]
+        order = 4
+        all_tables[3].reorder_cards(qm, card, order)
+        for i, c in enumerate(all_tables[3].cards):
+            if c == card:
+                self.assertEqual(c.get_order(), order)
+            self.assertEqual(c.get_order(), i)
 
     def test_add_comment(self):
         c = Comment()
