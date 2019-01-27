@@ -1,9 +1,9 @@
 from card import Card
 from models import TableModel
-from abstract_class import ComposedItem as AbstractItem
+from abstract_class import ComposedItem
 
 
-class Table(AbstractItem):
+class Table(ComposedItem):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.model_class = TableModel

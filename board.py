@@ -1,9 +1,9 @@
 from table import Table
 from models import BoardModel
-from abstract_class import ComposedItem as AbstractItem
+from abstract_class import ComposedItem
 
 
-class Board(AbstractItem):
+class Board(ComposedItem):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.model_class = BoardModel

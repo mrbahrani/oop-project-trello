@@ -1,9 +1,9 @@
 # from abstract_class import ComposedItem as AbstractItem
-from abstract_class import ComposedItem as AbstractItem
+from abstract_class import ComposedItem
 from models import CardModel
 
 
-class Card(AbstractItem):
+class Card(ComposedItem):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.model_class = CardModel

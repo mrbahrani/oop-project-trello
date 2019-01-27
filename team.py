@@ -1,10 +1,10 @@
 from user import User
 from board import Board
-from abstract_class import ComposedItem as AbstractItem
+from abstract_class import ComposedItem
 from models import TeamModel
 
 
-class Team(AbstractItem):
+class Team(ComposedItem):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.model_class = TeamModel
