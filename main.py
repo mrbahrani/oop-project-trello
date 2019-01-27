@@ -115,4 +115,4 @@ def refresh_from_db():
 
 
 if __name__ == "__main__":
-    all_cards, all_users, all_boards, all_tables, all_teams, query_manager = refresh_from_db()
+    all_cards, all_users, all_boards, all_tables, all_teams, qm = refresh_from_db()

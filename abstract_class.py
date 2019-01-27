@@ -49,7 +49,6 @@ class ItemDBInterface:
         """
         if not self.id:  # if object has no instance in db then create it
             if parent_element:
-                # print(parent_element)
                 element = query_manager.create_object(self, parent_element)
             else:
                 element = query_manager.create_object(self)
@@ -157,22 +156,22 @@ class ComposedItem(ItemComponent):
         self._remove_element(query_manager, element)
         parent_element._add_element(query_manager, element, order)
 
-    def _reorder_elements(self, element, index: int):
+    def _reorder_elements(self, query_manager, element=None, index=None):
         # set current order
-        element.set_order(index)
+        if element:
+            element.set_order(index)
         # sort elements list by order
         self._elements_list = sorted(self._elements_list, key=lambda elm: getattr(elm, 'order'))
         # set order and save all elements
         for i, elm in enumerate(self._elements_list):
             # order for element is already set, so just save it
-            if elm == element:
-                elm.db_interface.save()
+            if element and elm == element:
+                elm.db_interface.save(query_manager)
                 continue
             elm.set_order(i)
-            elm.db_interface.save()
+            elm.db_interface.save(query_manager)
 
-
-
+        return self._elements_list
 
     def _get_elements_list(self):
         return self._elements_list

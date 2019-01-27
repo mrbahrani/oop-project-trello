@@ -20,3 +20,6 @@ class Table(AbstractItem):
 
     def move_card(self, query_manager, card: Card, table, order=None):
         self._move_element(query_manager, card, table, order)
+
+    def reorder_cards(self, query_manager, element=None, index=None):
+        return self._reorder_elements(query_manager, element, index)

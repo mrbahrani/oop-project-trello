@@ -18,3 +18,6 @@ class Board(AbstractItem):
     def remove_table(self, query_manager, table: Table):
         return self._remove_element(query_manager, table)
 
+    def reorder_tables(self, query_manager, element=None, index=None):
+        return self._reorder_elements(query_manager, element, index)
+

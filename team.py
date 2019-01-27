@@ -18,3 +18,6 @@ class Team(AbstractItem):
 
     def remove_board(self, query_manager, board: Board):
         return self._remove_element(query_manager, board)
+
+    def reorder_boards(self, query_manager, element=None, index=None):
+        return self._reorder_elements(query_manager, element, index)
