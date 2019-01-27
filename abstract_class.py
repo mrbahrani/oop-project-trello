@@ -75,6 +75,7 @@ class ItemDBInterface:
 class ItemComponent:
     def __init__(self, *args, **kwargs):
         # super().__init__(*args, **kwargs)
+        self.id = None
         self.name = str()
         self.description = str()
         self.order = int()
@@ -119,7 +120,7 @@ class ComposedItem(ItemComponent):
         order = order if order else len(self._elements_list)
         element.set_order(order)
         element_model = element.db_interface.save(query_manager, self)
-        element.set_id(element_model.id)
+        element.db_interface.set_id(element_model.id)
         self._elements_list.insert(order, element)
         self._reorder_elements(element, order)
         return self._elements_list
@@ -157,7 +158,21 @@ class ComposedItem(ItemComponent):
         parent_element._add_element(query_manager, element, order)
 
     def _reorder_elements(self, element, index: int):
-        pass
+        # set current order
+        element.set_order(index)
+        # sort elements list by order
+        self._elements_list = sorted(self._elements_list, key=lambda elm: getattr(elm, 'order'))
+        # set order and save all elements
+        for i, elm in enumerate(self._elements_list):
+            # order for element is already set, so just save it
+            if elm == element:
+                elm.db_interface.save()
+                continue
+            elm.set_order(i)
+            elm.db_interface.save()
+
+
+
 
     def _get_elements_list(self):
         return self._elements_list
@@ -198,7 +213,7 @@ class AbstractItem:
         order = order if order else len(self._elements_list)
         element.set_order(order)
         element_model = element.db_interface.save(query_manager, self)
-        element.set_id(element_model.id)
+        element.db_interface.set_id(element_model.id)
         self._elements_list.insert(order, element)
         self._reorder_elements(element, order)
         return self._elements_list

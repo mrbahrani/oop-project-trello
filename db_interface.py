@@ -12,7 +12,7 @@ class QueryHandler:
         model_class = obj.model_class
         for field in db_map[model_class]:
             if field in parents:
-                parameter_list[field] = parent.get_id()
+                parameter_list[field] = parent.db_interface.get_id()
             else:
                 parameter_list[field] = getattr(obj, field)
         return model_class.create(**parameter_list)
