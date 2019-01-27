@@ -52,7 +52,7 @@ def convert_to_card_classes(cards, card_to_comments):
     return all_cards, table_to_card_map
 
 
-def convert_to_comment_classes(comments):
+def convert_to_comment_classes(comments, all_users):
     all_comments = []
     card_to_comment_map = dict()
     for comment in comments:
@@ -60,6 +60,9 @@ def convert_to_comment_classes(comments):
         c.set_id(comment.id)
         c.set_text(comment.text)
         c.set_user(comment.user)
+        for _ in range(random.randrange(1, 4)):
+            user = random.choice(all_users)
+            c.members.add_member(user)
 
         if not card_to_comment_map.get(comment.card.id):
             card_to_comment_map[comment.card.id] = [c]
@@ -126,7 +129,7 @@ def convert_to_team_classes(teams, team_to_board):
 def refresh_from_db():
     teams, boards, tables, cards, users, comments = load_db()
     all_users = convert_to_user_classes(users)
-    all_comments, card_to_comments = convert_to_comment_classes(comments)
+    all_comments, card_to_comments = convert_to_comment_classes(comments, all_users)
     all_cards, table_to_cards = convert_to_card_classes(cards, card_to_comments)
     all_tables, board_to_table = convert_to_table_classes(tables, table_to_cards)
     all_boards, team_to_board = convert_to_board_classes(boards, board_to_table)

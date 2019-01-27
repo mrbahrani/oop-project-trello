@@ -4,10 +4,10 @@
 # from card import Card
 # from table import Table
 from main import *
+import unittest
+import random
 
 all_comments, all_cards, all_users, all_boards, all_tables, all_teams, qm = refresh_from_db()
-
-import unittest
 
 
 class TestSum(unittest.TestCase):
@@ -38,6 +38,26 @@ class TestSum(unittest.TestCase):
         c = all_cards[0].comments[0]
         all_cards[0].remove_comment(qm, c)
         self.assertFalse(c in all_cards[0])
+
+    def test_members(self):
+        test_cycles = 40
+        test_card = None
+        test_member = None
+        test_index = random.randrange(0, test_cycles)
+        for i in range(test_cycles):
+            user = random.choice(all_users)
+            card = random.choice(all_cards)
+            card.members.add_member(user)
+            if i == test_index:
+                test_card = card
+                test_member = user
+
+        self.assertIn(test_member, test_card.members)
+
+        test_card.members.remove_member(test_member)
+
+        self.assertNotIn(test_member, test_card.members)
+
 
 
 if __name__ == '__main__':

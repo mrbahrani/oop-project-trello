@@ -15,7 +15,6 @@ class QueryHandler:
                 parameter_list[field] = parent.get_id()
             else:
                 parameter_list[field] = getattr(obj, field)
-        print(parameter_list)
         return model_class.create(**parameter_list)
 
     def retrieve_object(self, obj: AbstractItem):

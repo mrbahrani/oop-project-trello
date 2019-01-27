@@ -1,28 +1,3 @@
-# for test:
-class ItemMemberInterface:
-    """
-    A member manager class used to be associated with classes handling their relations and authorizations with objects
-    """
-    def __init__(self):
-        self._members = list()
-
-    def __call__(self, *args, **kwargs):
-        """
-        On calling this class as association, it will return all members of the associated object
-        """
-        return self._members
-
-    def add_member(self, member):
-        self._members.append(member)
-
-    def remove_member(self, member):
-        try:
-            self._members.remove(member)
-        except ValueError:  # if element doesnt exist in members
-            return None
-        return self._members
-
-
 class ItemDBInterface:
     def __init__(self):
         self.id = None
@@ -69,6 +44,36 @@ class ItemDBInterface:
         if self.id:
             query_manager.delete_object(self)
             self.id = None
+
+
+class ItemMemberInterface:
+    """
+    A member manager class used to be associated with classes handling their relations and authorizations with objects
+    """
+    def __init__(self):
+        self._members = list()
+
+    def __call__(self, *args, **kwargs):
+        """
+        On calling this class as association, it will return all members of the associated object
+        """
+        return self._members
+
+    def __contains__(self, item):
+        return item in self._members
+
+    def add_member(self, member):
+        self._members.append(member)
+
+    def remove_member(self, member):
+        try:
+            self._members.remove(member)
+        except ValueError:  # if element doesnt exist in members
+            return None
+        return self._members
+
+    def has_permission_to_perform_action(self, member):
+        return member in self._members
 
 
 class ItemComponent(ItemDBInterface):
@@ -191,7 +196,7 @@ class ComposedItem(ItemComponent):
         self._elements_list = sorted(self._elements_list, key=lambda elm: getattr(elm, 'order'))
         if element and index:
             self._elements_list.remove(element)
-            print('index is', index)
+            # print('index is', index)
             self._elements_list.insert(index, element)
 
         # set order and save all elements

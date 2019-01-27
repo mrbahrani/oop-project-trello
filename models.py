@@ -100,7 +100,7 @@ def add_some_users_and_teams():
         )
         created_users.append(u)
 
-    print(created_users)
+    # print(created_users)
 
     for team in teams:
         t = TeamModel.create(
