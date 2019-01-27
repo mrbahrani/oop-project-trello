@@ -35,7 +35,7 @@ def convert_to_card_classes(cards):
     table_to_card_map = dict()
     for card in cards:
         c = Card()
-        c.db_interface.set_id(card.id)
+        c.set_id(card.id)
         c.set_description(card.description)
         c.set_order(card.order)
         c.set_name(card.name)
@@ -54,11 +54,11 @@ def convert_to_table_classes(tables, table_to_card_map):
     board_to_table = dict()
     for model in tables:
         item = Table()
-        item.db_interface.set_id(model.id)
+        item.set_id(model.id)
         # item.set_description(model.description)
         # item.set_order(model.order)
         item.set_name(model.name)
-        item._elements_list = table_to_card_map[item.db_interface.get_id()]
+        item._elements_list = table_to_card_map[item.get_id()]
 
         if not board_to_table.get(model.board.id):
             board_to_table[model.board.id] = [item]
@@ -74,11 +74,11 @@ def convert_to_board_classes(boards, board_to_table):
     team_to_board = dict()
     for model in boards:
         item = Board()
-        item.db_interface.set_id(model.id)
+        item.set_id(model.id)
         # item.set_description(model.description)
         # item.set_order(model.order)
         item.set_name(model.name)
-        item._elements_list = board_to_table[item.db_interface.get_id()]
+        item._elements_list = board_to_table[item.get_id()]
 
         if not team_to_board.get(model.team.id):
             team_to_board[model.team.id] = [item]
@@ -93,11 +93,11 @@ def convert_to_team_classes(teams, team_to_board):
     all_items = []
     for model in teams:
         item = Team()
-        item.db_interface.set_id(model.id)
+        item.set_id(model.id)
         item.set_description(model.description)
         # item.set_order(model.order)
         item.set_name(model.name)
-        item._elements_list = team_to_board[item.db_interface.get_id()]
+        item._elements_list = team_to_board[item.get_id()]
         all_items.append(item)
     return all_items
 

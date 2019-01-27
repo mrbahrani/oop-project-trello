@@ -71,16 +71,16 @@ class ItemDBInterface:
             self.id = None
 
 
-class ItemComponent:
+class ItemComponent(ItemDBInterface):
     def __init__(self, *args, **kwargs):
-        # super().__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.id = None
         self.name = str()
         self.description = str()
         self.order = int()
         self.model_class = None
         self.members = ItemMemberInterface()
-        self.db_interface = ItemDBInterface()
+        # self.db_interface = ItemDBInterface()
 
     def set_name(self, name):
         self.name = name
@@ -118,8 +118,8 @@ class ComposedItem(ItemComponent):
         """
         order = order if order else len(self._elements_list)
         element.set_order(order)
-        element_model = element.db_interface.save(query_manager, self)
-        element.db_interface.set_id(element_model.id)
+        element_model = element.save(query_manager, self)
+        element.set_id(element_model.id)
         self._elements_list.insert(order, element)
         self._reorder_elements(element, order)
         return self._elements_list
@@ -135,7 +135,7 @@ class ComposedItem(ItemComponent):
         """
         try:
             self._elements_list.remove(element)
-            element.db_interface.delete(query_manager)  # delete rom database
+            element.delete(query_manager)  # delete rom database
             del element  # delete the object itself
         except ValueError:  # if element doesnt exist in elements_list
             return None
@@ -166,10 +166,10 @@ class ComposedItem(ItemComponent):
         for i, elm in enumerate(self._elements_list):
             # order for element is already set, so just save it
             if element and elm == element:
-                elm.db_interface.save(query_manager)
+                elm.save(query_manager)
                 continue
             elm.set_order(i)
-            elm.db_interface.save(query_manager)
+            elm.save(query_manager)
 
         return self._elements_list
 
@@ -211,8 +211,8 @@ class AbstractItem:
         """
         order = order if order else len(self._elements_list)
         element.set_order(order)
-        element_model = element.db_interface.save(query_manager, self)
-        element.db_interface.set_id(element_model.id)
+        element_model = element.save(query_manager, self)
+        element.set_id(element_model.id)
         self._elements_list.insert(order, element)
         self._reorder_elements(element, order)
         return self._elements_list
@@ -228,7 +228,7 @@ class AbstractItem:
         """
         try:
             self._elements_list.remove(element)
-            element.db_interface.delete(query_manager)  # delete rom database
+            element.delete(query_manager)  # delete rom database
             del element  # delete the object itself
         except ValueError:  # if element doesnt exist in elements_list
             return None
